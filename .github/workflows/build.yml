@@ -9,7 +9,9 @@ jobs:
         run: |
           unzip -o squarehotbar-26.3-src.zip -d work
           sed -i "s/fabric-loom' version '[^']*'/fabric-loom' version '1.19.3'/" work/squarehotbar/build.gradle
+          sed -i "s/Type.KEYSYM/Type.KEYBOARD/" work/squarehotbar/src/main/java/com/example/squarehotbar/SquareHotbarClient.java
           grep -n "fabric-loom" work/squarehotbar/build.gradle
+          grep -n "Type\." work/squarehotbar/src/main/java/com/example/squarehotbar/SquareHotbarClient.java
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
