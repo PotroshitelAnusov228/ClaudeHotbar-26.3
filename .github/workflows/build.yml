@@ -1,0 +1,26 @@
+name: build
+on: [push, workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unpack project
+        run: |
+          unzip -o squarehotbar-26.3-src.zip -d work
+          ls -la work/squarehotbar
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 25
+      - uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: 9.7.1
+      - name: Build
+        working-directory: work/squarehotbar
+        run: |
+          for i in 1 2 3 4; do gradle build && exit 0; echo "retry $i"; sleep 90; done; exit 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: squarehotbar-26.3-mod
+          path: work/squarehotbar/build/libs/squarehotbar-2.0.0.jar
