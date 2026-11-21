@@ -8,7 +8,8 @@ jobs:
       - name: Unpack project
         run: |
           unzip -o squarehotbar-26.3-src.zip -d work
-          ls -la work/squarehotbar
+          sed -i "s/fabric-loom' version '[^']*'/fabric-loom' version '1.19.3'/" work/squarehotbar/build.gradle
+          grep -n "fabric-loom" work/squarehotbar/build.gradle
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
